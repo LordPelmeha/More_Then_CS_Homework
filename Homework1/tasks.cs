@@ -142,5 +142,6 @@ namespace Homework1
             for (int i = 0; i < n; i++) { Console.WriteLine($"Месяц №{x}, его сезон: {Month(x)}"); x = r.Next(1, 13); }
         }
         //Для теста комита
+        //Ещё один тест
     }
 }
