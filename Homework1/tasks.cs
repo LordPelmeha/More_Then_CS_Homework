@@ -132,7 +132,7 @@ namespace Homework1
             }
         }
         /// <summary>
-        /// Выводит на консоль N строк "Месяц №(номер месяца), его сезон: (сезон для этого месяца)". Номера месяцев генерируются случайно.
+        /// Выводит на консоль N строк "Месяц №<номер месяца>, его сезон: <сезон для этого месяца>". Номера месяцев генерируются случайно.
         /// </summary>
         static void RandomMonth(int n)
         {
@@ -141,6 +141,5 @@ namespace Homework1
             int x = r.Next(1, 13);
             for (int i = 0; i < n; i++) { Console.WriteLine($"Месяц №{x}, его сезон: {Month(x)}"); x = r.Next(1, 13); }
         }
-        static void fafa() => Console.WriteLine();
     }
 }
