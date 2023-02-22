@@ -38,5 +38,24 @@ namespace HomeworkTests
                 new int[]{ 1, 2, 3 },
                 new int[]{ 1, 2, 3 } }), Is.EqualTo((1, 6)));
         }
+        [Test]
+        public void TestMaxAverage()
+        {
+            Assert.That(MaxAverage(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 4, 5 },
+                new int[]{ 9 },
+                new int[]{ 1, 4, 7 } }), Is.EqualTo(9));
+            Assert.That(MaxAverage(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 4, 5, 6 },
+                new int[]{ 7, 8 },
+                new int[]{ 1, 4, 7 } }), Is.EqualTo(7.5));
+            Assert.That(MaxAverage(new int[][] { }), Is.EqualTo(0));
+            Assert.That(MaxAverage(null), Is.EqualTo(0));
+            Assert.That(MaxAverage(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 1, 2, 3 } }), Is.EqualTo(2));
+        }
     }
 }

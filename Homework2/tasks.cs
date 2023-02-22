@@ -24,6 +24,13 @@ namespace Homework2
                 new int[]{ 4, 5, 6 },
                 new int[]{ 7, 8, 9 },
                 new int[]{ 1, 4, 7 } }));
+            Console.WriteLine();
+            Console.WriteLine("Задание 5");
+            Console.WriteLine(MaxAverage(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 4, 5 },
+                new int[]{ 9 },
+                new int[]{ 1, 4, 7 } }));
         }
         public static int[] MasFilter(int[] s, Func<int, bool> f)
         {
@@ -71,6 +78,14 @@ namespace Homework2
                 }
             }
             return (row + 1, sum);
+        }
+        public static double MaxAverage(int[][] s)
+        {
+            double max = 0;
+            if (s == null || s.GetLength(0) == 0) return max;
+            for (int i = 0; i < s.GetLength(0); i++)
+                if (s[i].Average() > max) max = s[i].Average();
+            return max;
         }
     }
 }
