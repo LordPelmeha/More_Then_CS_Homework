@@ -22,5 +22,21 @@ namespace HomeworkTests
             SwapParts(ref s2);
             Assert.That(s2, Is.EqualTo(new int[] { }));
         }
+        [Test]
+        public void TestMaxRowSum()
+        {
+            Assert.That(MaxRowSum(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 4, 5, 6 },
+                new int[]{ 7, 8, 9 },
+                new int[]{ 1, 4, 7 } }), Is.EqualTo((3, 24)));
+            Assert.That(MaxRowSum(new int[][] { }), Is.EqualTo((0, 0)));
+            Assert.That(MaxRowSum(null), Is.EqualTo((0, 0)));
+            Assert.That(MaxRowSum(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 1, 2, 3 },
+                new int[]{ 1, 2, 3 },
+                new int[]{ 1, 2, 3 } }), Is.EqualTo((1, 6)));
+        }
     }
 }

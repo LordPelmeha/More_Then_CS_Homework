@@ -17,6 +17,13 @@ namespace Homework2
             Console.WriteLine();
             Console.WriteLine("Задание 3");
             PrintLeftRight(new int[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 1, 4, 7 } });
+            Console.WriteLine();
+            Console.WriteLine("Задание 4");
+            Console.WriteLine(MaxRowSum(new int[][] {
+                new int[]{ 1, 2, 3 },
+                new int[]{ 4, 5, 6 },
+                new int[]{ 7, 8, 9 },
+                new int[]{ 1, 4, 7 } }));
         }
         public static int[] MasFilter(int[] s, Func<int, bool> f)
         {
@@ -49,6 +56,21 @@ namespace Homework2
                 flag = !flag;
                 Console.WriteLine();
             }
+        }
+        public static (int, int) MaxRowSum(int[][] s)
+        {
+            int row = 0;
+            int sum = 0;
+            if (s == null || s.GetLength(0) == 0) return (row, sum);
+            for (int i = 0; i < s.GetLength(0); i++)
+            {
+                if (s[i].Sum() > sum)
+                {
+                    row = i;
+                    sum = s[i].Sum();
+                }
+            }
+            return (row + 1, sum);
         }
     }
 }
