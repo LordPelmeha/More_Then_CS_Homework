@@ -32,6 +32,9 @@ namespace Homework2
                 new int[]{ 9 },
                 new int[]{ 1, 4, 7 } }));
         }
+        /// <summary>
+        /// Возвращает новый массив, в котором удалены все элементы, не удовлетворяющие предикату.
+        /// </summary>
         public static int[] MasFilter(int[] s, Func<int, bool> f)
         {
             int[] a = new int[s.Count()];
@@ -44,11 +47,18 @@ namespace Homework2
                 }
             return a[..count];
         }
+        /// <summary>
+        /// Меняет местами первую и второую половину массива.
+        /// </summary>
         public static void SwapParts(ref int[] s)
         {
             if (s.Length % 2 != 0) throw new ArgumentException("Длина массива должна быть чётной!");
             s = s[(s.Length / 2)..].Concat(s[..(s.Length / 2)]).ToArray();
         }
+        /// <summary>
+        /// Выводит элементы матрицы в следующем порядке: первая строка слева направо, 
+        /// вторая строка справа налево, третья строка слева направо, четвертая строка справа налево и т. д.
+        /// </summary>
         public static void PrintLeftRight(int[,] s)
         {
             bool flag = true;
@@ -64,6 +74,10 @@ namespace Homework2
                 Console.WriteLine();
             }
         }
+        /// <summary>
+        /// Находящий номер строки матрицы с наибольшей суммой элементов, 
+        /// а также значение наибольшей суммы.
+        /// </summary>
         public static (int, int) MaxRowSum(int[][] s)
         {
             int row = 0;
@@ -79,6 +93,9 @@ namespace Homework2
             }
             return (row + 1, sum);
         }
+        /// <summary>
+        /// Найходит максимальное значение среди всех средних значений строк массива.
+        /// </summary>
         public static double MaxAverage(int[][] s)
         {
             double max = 0;
