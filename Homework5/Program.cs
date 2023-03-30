@@ -25,8 +25,13 @@ namespace Homework5
             Console.WriteLine();
             Console.WriteLine("задание 6");
             // Console.WriteLine(GetListFromFile("input-files/IMDB.csv").Count());
-            foreach (var movie in GetListFromFile("input-files/IMDB.csv"))
-                Console.WriteLine($"{movie.Title} {movie.OriginalLanguage} {movie.VoteCount} {movie.VoteAverage}");
+            var Movies = GetListFromFile("input-files/IMDB.csv");
+            FiveBestAndWorstFilms(Movies);
+            Console.WriteLine();
+            Console.WriteLine(CountBestRuFilms(Movies));
+            Console.WriteLine();
+            var tonight = MovieTonight(Movies, "fr", 7.1);
+            Console.WriteLine($"{tonight.Title} {tonight.OriginalLanguage} {tonight.VoteCount} {tonight.VoteAverage}");
         }
         /// <summary>
         /// Формирует бинарный файл из N случайных вещественных чисел в диапазоне от a до b (a ≤ b)
@@ -91,6 +96,36 @@ namespace Homework5
                 }
             }
             return MoviesList;
+        }
+        /// <summary>
+        /// Выведит антитоп-5 с наименьшим рейтингом, а также топ-5 фильмов с наибольшим рейтингом 
+        /// </summary>
+        static void FiveBestAndWorstFilms(List<Movie> s)
+        {
+            Console.WriteLine("Худшие фильмы");
+            for (int i = 0; i < 5; i++)
+                Console.WriteLine($"{s[i].Title} {s[i].OriginalLanguage} {s[i].VoteCount} {s[i].VoteAverage}");
+            Console.WriteLine();
+            Console.WriteLine("Лучшие фильмы");
+            for (int i = s.Count() - 5; i < s.Count; i++)
+                Console.WriteLine($"{s[i].Title} {s[i].OriginalLanguage} {s[i].VoteCount} {s[i].VoteAverage}");
+        }
+        /// <summary>
+        /// Определяет количество фильмов на русском языке с оценкой больше 7
+        /// </summary>
+        static int CountBestRuFilms(List<Movie> s) => s.Where(x => x.OriginalLanguage == "ru" && x.VoteAverage > 7).Count();
+        /// <summary>
+        /// Возвращает рандомный фильм с заданным языком оригинала и оценкой выше заданного порога
+        /// </summary>
+        static Movie MovieTonight(List<Movie> s, string lan, double vote)
+        {
+            var ar = s.Where(x => x.OriginalLanguage == lan && x.VoteAverage > vote).ToArray();
+            if (ar.Count() == 0) throw new ArgumentException("По заданным вами критериям нету фильмов!");
+            else
+            {
+                var r = new Random();
+                return ar[r.Next(0, ar.Count())];
+            }
         }
     }
     public class Movie
