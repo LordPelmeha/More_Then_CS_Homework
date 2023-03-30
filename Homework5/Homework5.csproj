@@ -14,6 +14,9 @@
     <None Update="input-files\task2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="input-files\task5.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="input-files\ответы на контрольную.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
