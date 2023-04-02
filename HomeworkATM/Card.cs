@@ -47,7 +47,7 @@ namespace HomeworkATM
             private set
             {
                 var ar = Regex.Split(value, @"\/").Select(x => x.ToString()).ToArray();
-                if (valid != null && Regex.Match(value, @"\d{2}\\\d{2}").Success && ar[0] != "00" && int.Parse(ar[0]) < 13)
+                if (value != null && Regex.Match(value, @"\d{2}\/\d{2}").Success && ar[0] != "00" && int.Parse(ar[0]) < 13)
                     valid = value;
             }
         }
@@ -83,5 +83,8 @@ namespace HomeworkATM
             this.Bank = Bank;
             this.Sum = Sum;
         }
+        public override string ToString() => $"Номер карты - {Num}\nИмя владельца - {Name}\n" +
+            $"Месяц и год окончания действия карты - {Valid}\nБанк-эмитент карты - {Bank}\nСумма денег на счету - {Sum}";
     }
+    
 }
