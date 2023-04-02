@@ -37,14 +37,20 @@ namespace HomeworkATM
         }
         public override string ToString()
         {
-            var cas=new StringBuilder();
-            foreach (var x in Cassette) 
+            var cas = new StringBuilder();
+            foreach (var x in Cassette)
                 cas.Append($"Банкноты номиналом {x.Key} имеется в количестве {x.Value}\n");
-            var his=new StringBuilder();
+            var his = new StringBuilder();
             foreach (var x in History)
                 his.Append(x);
             return $"{ID}\n{Bank}\n{Cassette}\n{History}\n{Key}";
         }
-            
+        static long CashAmount(Dictionary<string, int> dict)
+        {
+            long sum = 0;
+            foreach (var x in dict)
+                sum += int.Parse(x.Key) * x.Value;
+            return sum;
+        }
     }
 }
