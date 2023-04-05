@@ -13,7 +13,7 @@ namespace HomeworkATM
         private string name;
         private string valid;
         private string bank;
-        private int sum;
+        private double sum;
         public string Num
         {
             get
@@ -63,7 +63,7 @@ namespace HomeworkATM
                     bank = value;
             }
         }
-        public int Sum
+        public double Sum
         {
             get
             {
@@ -75,7 +75,7 @@ namespace HomeworkATM
                     sum = value;
             }
         }
-        public Card(string Num, string Name, string Valid, string Bank, int Sum)
+        public Card(string Num, string Name, string Valid, string Bank, double Sum)
         {
             this.Num = Num;
             this.Name = Name;
