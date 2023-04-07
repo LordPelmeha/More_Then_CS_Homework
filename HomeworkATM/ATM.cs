@@ -41,8 +41,16 @@ namespace HomeworkATM
             var r = new Random();
             ID = r.NextInt64(10000000, 100000000);
             this.Bank = Bank;
-            Cassette = new Dictionary<string, int>() { ["50"] = 100, ["100"] = 100, ["200"] = 100, 
-                ["500"] = 100, ["1000"] = 100, ["2000"] = 100, ["5000"]=100 };
+            Cassette = new Dictionary<string, int>()
+            {
+                ["5000"] = 100,
+                ["2000"] = 100,
+                ["1000"] = 100,
+                ["500"] = 100,
+                ["200"] = 100,
+                ["100"] = 100,
+                ["50"] = 100
+            };
             History = new List<string>();
             Key = "SlivkаLenivkаSkinulaParshakVBasseyn";
         }

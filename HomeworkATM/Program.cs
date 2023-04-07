@@ -13,11 +13,18 @@ namespace HomeworkATM
             Console.WriteLine();
             Console.WriteLine(b.ToString());
             Console.WriteLine();
-            Replenishment(ref a, b, ReadBanknotes(Console.ReadLine()));
+            Replenishment(a, b, ReadBanknotes(Console.ReadLine()));
             Console.WriteLine();
             Console.WriteLine(a.ToString());
             Console.WriteLine();
             Console.WriteLine(b.ToString());
+            Console.WriteLine();
+            Withdrawal(a, b, ChekSum(Console.ReadLine()));
+            Console.WriteLine();
+            Console.WriteLine(a.ToString());
+            Console.WriteLine();
+            Console.WriteLine(b.ToString());
+
         }
         static bool ChekBanknotes(Dictionary<string, int> dict, Dictionary<string, int> caset, string num, List<string> history)
         {
@@ -82,7 +89,7 @@ namespace HomeworkATM
             foreach (var x in dict)
                 casette[x.Key] += x.Value;
         }
-        static void Replenishment(ref Card card, ATM atm, Dictionary<string, int> banknotes)
+        static void Replenishment(Card card, ATM atm, Dictionary<string, int> banknotes)
         {
             if (ChekBanknotes(banknotes, atm.Cassette, card.Num, atm.History))
             {
@@ -95,6 +102,71 @@ namespace HomeworkATM
                     atm.History.Add($"{card.Num}: пополнение на {AddMoney}=> операция успешно завершена\n");
                 }
             }
+        }
+        static int ChekSum(string s)
+        {
+            if (!Regex.Match(s, @"\D").Success || s != "")
+                if (int.Parse(s) % 50 == 0)
+                    return int.Parse(s);
+            throw new ArgumentException("Сумму для снятия введена в неправильном формате");
+        }
+        static bool CanGetMoney(int sum, Dictionary<string, int> dict, string num, List<string> history)
+        {
+            var count = 0;
+            foreach (var x in dict)
+            {
+                for (var i = 0; i < x.Value; i++)
+                    if (count + int.Parse(x.Key) <= sum)
+                        count += int.Parse(x.Key);
+            }
+            if (sum == count)
+                return true;
+            Console.WriteLine("Банкомат не может выдать данную сумму!");
+            history.Add($"{num}: снятие => невозможно выдать сумму");
+            return false;
+        }
+        static void GiveMoney(int sum, Dictionary<string, int> dict)
+        {
+            var count = 0;
+            foreach (var x in dict)
+            {
+                for (var i = 0; i < x.Value; i++)
+                    if (count + int.Parse(x.Key) <= sum)
+                    {
+                        dict[x.Key] -= 1;
+                        count += int.Parse(x.Key);
+                    }
+            }
+        }
+        static void Withdrawal(Card card, ATM atm, int sum)
+        {
+            if (ChekValid(card.Valid, card.Num, atm.History))
+            {
+                if (atm.CashAmount >= sum)
+                {
+                    if (card.Sum >= sum)
+                    {
+                        if (CanGetMoney(sum, atm.Cassette, card.Num, atm.History))
+                        {
+                            GiveMoney(sum, atm.Cassette);
+                            card.Sum -= sum * AddCommission(card.Bank, atm.Bank, card.Num, atm.History);
+                            Console.WriteLine("Операция успешно завершена!");
+                            atm.History.Add($"{card.Num}: снитие {sum}=> операция успешно завершена\n");
+                        }
+                    }
+                    else
+                        Console.WriteLine("Недостаточно средств на карте!");
+                }
+                else
+                {
+                    Console.WriteLine("В банкомете недостаточно средств!");
+                    atm.History.Add($"{card.Num}: снятие => недостаточно средств в банкомате");
+                }
+            }
+        }
+        static void PickUp(string code)
+        {
+
         }
     }
 }
