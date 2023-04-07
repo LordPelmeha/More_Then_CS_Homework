@@ -52,7 +52,7 @@ namespace HomeworkATM
                 ["50"] = 100
             };
             History = new List<string>();
-            Key = "SlivkаLenivkаSkinulaParshakVBasseyn";
+            Key = "SlivkaLenivkaSkinulaParshak";
         }
         public override string ToString()
         {

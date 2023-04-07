@@ -24,6 +24,8 @@ namespace HomeworkATM
             Console.WriteLine(a.ToString());
             Console.WriteLine();
             Console.WriteLine(b.ToString());
+            Console.WriteLine();
+            PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
 
         }
         static bool ChekBanknotes(Dictionary<string, int> dict, Dictionary<string, int> caset, string num, List<string> history)
@@ -164,9 +166,36 @@ namespace HomeworkATM
                 }
             }
         }
-        static void PickUp(string code)
+        static void PickUp(Card card, ATM atm, string code)
         {
-
+            if (code.Length == atm.Key.Length)
+            {
+                int flag = 1;
+                for (int i = 0; i < code.Length; i++)
+                {
+                    if (code[i] - 4 != atm.Key[i])
+                        flag = 0;
+                }
+                if (flag == 1)
+                {
+                    var count = 0;
+                    foreach (var x in atm.Cassette)
+                        count += x.Value;
+                    count /= 7;
+                    foreach (var x in atm.Cassette)
+                        atm.Cassette[x.Key] = count;
+                    foreach (var x in atm.History)
+                        Console.Write(x);
+                    atm.History.Clear();
+                }
+                else
+                {
+                    for (int i = 0; i < code.Length; i++)
+                    {
+                        Console.WriteLine($"{code[i] - 4} {atm.Key[i] - 0}");
+                    }
+                }
+            }
         }
     }
 }
