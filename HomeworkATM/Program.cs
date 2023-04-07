@@ -28,6 +28,9 @@ namespace HomeworkATM
             PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
 
         }
+        /// <summary>
+        /// Проверяет правильность внесённых банкнот
+        /// </summary>
         static bool ChekBanknotes(Dictionary<string, int> dict, Dictionary<string, int> caset, string num, List<string> history)
         {
             foreach (var x in dict)
@@ -41,6 +44,9 @@ namespace HomeworkATM
             }
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static bool ChekValid(string valid, string num, List<string> history)
         {
             var month = int.Parse(valid.Split("/")[0]);
@@ -51,6 +57,9 @@ namespace HomeworkATM
             Console.WriteLine("Ваша карта просрочена!");
             return false;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static Dictionary<string, int> ReadBanknotes(string banknotes)
         {
             var ar = Regex.Split(banknotes, @"\s+").Select(x => x.ToString()).ToArray();
@@ -68,6 +77,9 @@ namespace HomeworkATM
             }
             return dict;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static long CashSum(Dictionary<string, int> dict)
         {
             long sum = 0;
@@ -75,6 +87,9 @@ namespace HomeworkATM
                 sum += int.Parse(x.Key) * x.Value;
             return sum;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static double AddCommission(string cardBank, string ATMBank, string num, List<string> history)
         {
             if (cardBank == ATMBank)
@@ -86,11 +101,17 @@ namespace HomeworkATM
                 return 0.95;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void AddBanknotesToATM(Dictionary<string, int> dict, Dictionary<string, int> casette)
         {
             foreach (var x in dict)
                 casette[x.Key] += x.Value;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void Replenishment(Card card, ATM atm, Dictionary<string, int> banknotes)
         {
             if (ChekBanknotes(banknotes, atm.Cassette, card.Num, atm.History))
@@ -105,6 +126,9 @@ namespace HomeworkATM
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static int ChekSum(string s)
         {
             if (!Regex.Match(s, @"\D").Success || s != "")
@@ -112,6 +136,9 @@ namespace HomeworkATM
                     return int.Parse(s);
             throw new ArgumentException("Сумму для снятия введена в неправильном формате");
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static bool CanGetMoney(int sum, Dictionary<string, int> dict, string num, List<string> history)
         {
             var count = 0;
@@ -127,6 +154,9 @@ namespace HomeworkATM
             history.Add($"{num}: снятие => невозможно выдать сумму");
             return false;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void GiveMoney(int sum, Dictionary<string, int> dict)
         {
             var count = 0;
@@ -140,6 +170,9 @@ namespace HomeworkATM
                     }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void Withdrawal(Card card, ATM atm, int sum)
         {
             if (ChekValid(card.Valid, card.Num, atm.History))
@@ -166,6 +199,9 @@ namespace HomeworkATM
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void PickUp(Card card, ATM atm, string code)
         {
             if (code.Length == atm.Key.Length)
