@@ -86,5 +86,4 @@ namespace HomeworkATM
         public override string ToString() => $"Номер карты - {Num}\nИмя владельца - {Name}\n" +
             $"Месяц и год окончания действия карты - {Valid}\nБанк-эмитент карты - {Bank}\nСумма денег на счету - {Sum}";
     }
-
 }

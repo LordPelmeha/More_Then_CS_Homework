@@ -10,9 +10,9 @@ namespace HomeworkATM
     {
         public long ID;
         private string bank;
-        private Dictionary<string, int> Cassette;
-        private List<string> History;
-        private string Key;
+        public Dictionary<string, int> Cassette;
+        public List<string> History;
+        public string Key;
         public string Bank
         {
             get
@@ -44,7 +44,7 @@ namespace HomeworkATM
             Cassette = new Dictionary<string, int>() { ["50"] = 100, ["100"] = 100, ["200"] = 100, 
                 ["500"] = 100, ["1000"] = 100, ["2000"] = 100, ["5000"]=100 };
             History = new List<string>();
-            Key = "ILoveMMCS";
+            Key = "SlivkаLenivkаSkinulaParshakVBasseyn";
         }
         public override string ToString()
         {
