@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace HomeworkATM
 {
@@ -6,27 +7,38 @@ namespace HomeworkATM
     {
         static void Main()
         {
-            var a = new Card("1234567890111111", "fafa", "11/23", "sdg", 100);
+            var a = new Card("1234567890111111", "Александр", "11/27", "sdg", 100);
+            var b = new ATM("sdgh");
             Console.WriteLine(a.ToString());
+            Console.WriteLine();
+            Console.WriteLine(b.ToString());
+            Console.WriteLine();
+            Replenishment(ref a, b, ReadBanknotes(Console.ReadLine()));
+            Console.WriteLine();
+            Console.WriteLine(a.ToString());
+            Console.WriteLine();
+            Console.WriteLine(b.ToString());
         }
-        static bool ChekBanknotes(Dictionary<string, int> dict, Dictionary<string, int> caset, string num, ref List<string> history)
+        static bool ChekBanknotes(Dictionary<string, int> dict, Dictionary<string, int> caset, string num, List<string> history)
         {
             foreach (var x in dict)
             {
                 if (!caset.ContainsKey(x.Key) || x.Value < 1)
                 {
-                    history.Add($"{num}: пополнение (некорректная сумма) => вызвана полиция");
+                    history.Add($"{num}: пополнение (некорректная сумма) => вызвана полиция\n");
                     Console.WriteLine($"Вы пытаетьсь совершить незаконную операцию! Полиция уже едет за вами!");
                     return false;
                 }
             }
             return true;
         }
-        static bool ChekValid(string valid, string num, ref List<string> history)
+        static bool ChekValid(string valid, string num, List<string> history)
         {
-            if (int.Parse(valid.Split("/")[0]) <= DateTime.Now.Month && int.Parse(valid.Split("/")[1]) <= DateTime.Now.Year)
+            var month = int.Parse(valid.Split("/")[0]);
+            var year = int.Parse(valid.Split("/")[1]) + 2000;
+            if ((month >= DateTime.Now.Month && year == DateTime.Now.Year) || year >= DateTime.Now.Year)
                 return true;
-            history.Add($"{num}: пополнение => карта просрочена");
+            history.Add($"{num}: пополнение => карта просрочена\n");
             Console.WriteLine("Ваша карта просрочена!");
             return false;
         }
@@ -47,19 +59,41 @@ namespace HomeworkATM
             }
             return dict;
         }
-        static double AddCommission(string cardBank, string ATMBank) => cardBank == ATMBank ? 1.00 : 0.95;
-        static void Replenishment(Card card, ATM atm, Dictionary<string, int> banknotes)
+        static long CashSum(Dictionary<string, int> dict)
         {
-            if (ChekBanknotes(banknotes, atm.Cassette, card.Num, ref atm.History))
-            {
-                if (ChekValid(card.Valid, card.Num, ref atm.History))
-                {
-
-                }
-            }
+            long sum = 0;
+            foreach (var x in dict)
+                sum += int.Parse(x.Key) * x.Value;
+            return sum;
+        }
+        static double AddCommission(string cardBank, string ATMBank, string num, List<string> history)
+        {
+            if (cardBank == ATMBank)
+                return 1.00;
             else
             {
-
+                Console.WriteLine("Будет введена комиссия!");
+                history.Add($"{num}: пополнение => введена комиссия\n");
+                return 0.95;
+            }
+        }
+        static void AddBanknotesToATM(Dictionary<string, int> dict, Dictionary<string, int> casette)
+        {
+            foreach (var x in dict)
+                casette[x.Key] += x.Value;
+        }
+        static void Replenishment(ref Card card, ATM atm, Dictionary<string, int> banknotes)
+        {
+            if (ChekBanknotes(banknotes, atm.Cassette, card.Num, atm.History))
+            {
+                if (ChekValid(card.Valid, card.Num, atm.History))
+                {
+                    double AddMoney = CashSum(banknotes) * AddCommission(card.Bank, atm.Bank, card.Num, atm.History);
+                    card.Sum += AddMoney;
+                    AddBanknotesToATM(banknotes, atm.Cassette);
+                    Console.WriteLine("Операция успешно завершена!");
+                    atm.History.Add($"{card.Num}: пополнение на {AddMoney}=> операция успешно завершена\n");
+                }
             }
         }
     }

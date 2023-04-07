@@ -50,11 +50,11 @@ namespace HomeworkATM
         {
             var cas = new StringBuilder();
             foreach (var x in Cassette)
-                cas.Append($"Банкноты номиналом {x.Key} имеется в количестве {x.Value}\n");
+                cas.Append($"Банкноты номиналом {x.Key} имеется в количестве {x.Value} штук\n");
             var his = new StringBuilder();
             foreach (var x in History)
                 his.Append(x);
-            return $"{ID}\n{Bank}\n{Cassette}\n{History}\n{Key}";
+            return $"{ID}\n{Bank}\n{cas.ToString()}\n{his.ToString()}\n{Key}";
         }
 
 
