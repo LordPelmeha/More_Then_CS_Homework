@@ -45,7 +45,7 @@ namespace HomeworkATM
             return true;
         }
         /// <summary>
-        /// 
+        /// Проверяет, действительна ли карта
         /// </summary>
         static bool ChekValid(string valid, string num, List<string> history)
         {
@@ -58,7 +58,7 @@ namespace HomeworkATM
             return false;
         }
         /// <summary>
-        /// 
+        /// Проверяет банкноты и возвращает словарь банкнот
         /// </summary>
         static Dictionary<string, int> ReadBanknotes(string banknotes)
         {
@@ -78,7 +78,7 @@ namespace HomeworkATM
             return dict;
         }
         /// <summary>
-        /// 
+        /// Сумма денег
         /// </summary>
         static long CashSum(Dictionary<string, int> dict)
         {
@@ -88,7 +88,7 @@ namespace HomeworkATM
             return sum;
         }
         /// <summary>
-        /// 
+        /// Добавляет комиссию, если не совпадают банки
         /// </summary>
         static double AddCommission(string cardBank, string ATMBank, string num, List<string> history)
         {
@@ -102,7 +102,7 @@ namespace HomeworkATM
             }
         }
         /// <summary>
-        /// 
+        /// Заносит банкноты в касету
         /// </summary>
         static void AddBanknotesToATM(Dictionary<string, int> dict, Dictionary<string, int> casette)
         {
@@ -110,7 +110,7 @@ namespace HomeworkATM
                 casette[x.Key] += x.Value;
         }
         /// <summary>
-        /// 
+        /// Пополнение карты
         /// </summary>
         static void Replenishment(Card card, ATM atm, Dictionary<string, int> banknotes)
         {
@@ -127,7 +127,7 @@ namespace HomeworkATM
             }
         }
         /// <summary>
-        /// 
+        /// Проверяет сумму, которую хотят снять
         /// </summary>
         static int ChekSum(string s)
         {
@@ -137,7 +137,7 @@ namespace HomeworkATM
             throw new ArgumentException("Сумму для снятия введена в неправильном формате");
         }
         /// <summary>
-        /// 
+        /// Проверяет, можно ли снять сумму
         /// </summary>
         static bool CanGetMoney(int sum, Dictionary<string, int> dict, string num, List<string> history)
         {
@@ -155,7 +155,7 @@ namespace HomeworkATM
             return false;
         }
         /// <summary>
-        /// 
+        /// Выдаёт деньги, убирая их из банкомата
         /// </summary>
         static void GiveMoney(int sum, Dictionary<string, int> dict)
         {
@@ -171,7 +171,7 @@ namespace HomeworkATM
             }
         }
         /// <summary>
-        /// 
+        /// Снятие наличных
         /// </summary>
         static void Withdrawal(Card card, ATM atm, int sum)
         {
@@ -200,7 +200,7 @@ namespace HomeworkATM
             }
         }
         /// <summary>
-        /// 
+        /// Вызов инкасации
         /// </summary>
         static void PickUp(Card card, ATM atm, string code)
         {
