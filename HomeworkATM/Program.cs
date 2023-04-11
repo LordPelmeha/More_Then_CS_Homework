@@ -7,26 +7,52 @@ namespace HomeworkATM
     {
         static void Main()
         {
+            Start();
+        }
+        static void Start()
+        {
             var a = new Card("1234567890111111", "Александр", "11/27", "sdg", 100);
             var b = new ATM("sdgh");
-            Console.WriteLine(a.ToString());
-            Console.WriteLine();
-            Console.WriteLine(b.ToString());
-            Console.WriteLine();
-            Replenishment(a, b, ReadBanknotes(Console.ReadLine()));
-            Console.WriteLine();
-            Console.WriteLine(a.ToString());
-            Console.WriteLine();
-            Console.WriteLine(b.ToString());
-            Console.WriteLine();
-            Withdrawal(a, b, ChekSum(Console.ReadLine()));
-            Console.WriteLine();
-            Console.WriteLine(a.ToString());
-            Console.WriteLine();
-            Console.WriteLine(b.ToString());
-            Console.WriteLine();
-            PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
-
+            while (true)
+            {
+                var s = Console.ReadLine();
+                Console.WriteLine(a.ToString());
+                Console.WriteLine();
+                Console.WriteLine(b.ToString());
+                Console.WriteLine();
+                if (s == "1")
+                {
+                    Replenishment(a, b, ReadBanknotes(Console.ReadLine()));
+                    //Console.WriteLine();
+                    //Console.WriteLine(a.ToString());
+                    //Console.WriteLine();
+                    //Console.WriteLine(b.ToString());
+                    Console.WriteLine();
+                }
+                else if (s == "2")
+                {
+                    Withdrawal(a, b, ChekSum(Console.ReadLine()));
+                    //Console.WriteLine();
+                    //Console.WriteLine(a.ToString());
+                    //Console.WriteLine();
+                    //Console.WriteLine(b.ToString());
+                    Console.WriteLine();
+                }
+                else if (s == "0")
+                {
+                    PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
+                    //Console.WriteLine(a.ToString());
+                    //Console.WriteLine();
+                    // Console.WriteLine(b.ToString());
+                    Console.WriteLine();
+                    break;
+                }
+                else
+                {
+                    while (s != "1" || s != "2" || s != "0")
+                        s = Console.ReadLine();
+                }
+            }
         }
         /// <summary>
         /// Проверяет правильность внесённых банкнот
