@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace HomeworkATM
@@ -274,6 +275,63 @@ namespace HomeworkATM
                 }
             }
         }
+        static Stack<Banknote> GenBanknotes(string nominal, int n)
+        {
+            var st = new Stack<Banknote>();
+            var r = new Random();
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < n; i++)
+            {
+                s.Append(Convert.ToChar(r.Next(97, 123)).ToString());
+                s.Append(Convert.ToChar(r.Next(97, 123)).ToString());
+                for (int j = 0; j < 9; j++)
+                    s.Append(r.Next(0, 10).ToString());
+                st.Push(new Banknote(nominal, s.ToString()));
+                s = new StringBuilder();
+            }
+            return st;
+        }
+        static Stack<Banknote> GenGoodBanknotes(string nominal, int n)
+        {
+            var st = new Stack<Banknote>();
+            var r = new Random();
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < n; i++)
+            {
+                s.Append(Convert.ToChar(r.Next(97, 123)).ToString());
+                s.Append(Convert.ToChar(r.Next(97, 123)).ToString());
+                for (int j = 0; j < 9; j++)
+                    s.Append(r.Next(0, 10).ToString());
+                var banknote = new Banknote(nominal, s.ToString());
+                if (ChekMoreThousand(banknote) && ChekLessThousand(banknote))
+                    st.Push(banknote);
+                else
+                {
+                    if (!ChekMoreThousand(banknote))
+                    {
+                        if ((s[0] - s[1]) % 2 != 1)
+                        {
+                            if (s[1] != 97)
+                                s[1] = Convert.ToChar(s[1] - 1);
+                            else
+                                s[1] = Convert.ToChar(s[1] + 1);
+                        }
+                        if (s.ToString().Skip(2).ToArray().Select(x => int.Parse(x.ToString())).Sum() % 2 != 1)
+                        {
+
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                s = new StringBuilder();
+            }
+            return st;
+        }
+
         /// <summary>
         /// Вызов инкасации
         /// </summary>
