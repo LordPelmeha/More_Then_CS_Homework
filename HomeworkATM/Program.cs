@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace HomeworkATM
@@ -58,11 +57,11 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет правильность внесённых банкнот
         /// </summary>
-        static bool ChekBanknotes(Stack<Banknote> dict, Stack<Banknote> caset, string num, List<string> history)
+        static bool ChekBanknotes(Dictionary<string, int> dict, Dictionary<string, int> caset, string num, List<string> history)
         {
             foreach (var x in dict)
             {
-                if (int.Parse(x.Nominal) < 1 || !(ChekMoreThousand(x) && ChekMoreThousand(x)))
+                if (!caset.ContainsKey(x.Key) || x.Value < 1)
                 {
                     history.Add($"{num}: пополнение (некорректная сумма) => вызвана полиция\n");
                     Console.WriteLine($"Вы пытаетьсь совершить незаконную операцию! Полиция уже едет за вами!");
@@ -71,41 +70,6 @@ namespace HomeworkATM
             }
             return true;
         }
-        static bool ChekLessThousand(Banknote n)
-        {
-            if (int.Parse(n.Nominal) < 1000)
-            {
-                if (Math.Abs(n.Series[0] - n.Series[1]) % 2 == 0)
-                {
-                    int su = 0;
-                    for (int i = 2; i < n.Series.Length; i++)
-                    {
-                        su += int.Parse(n.Series[i].ToString());
-                    }
-                    if (su % 2 == 0)
-                        return true;
-                }
-            }
-            return true;
-        }
-        static bool ChekMoreThousand(Banknote n)
-        {
-            if (int.Parse(n.Nominal) >= 1000)
-            {
-                if (Math.Abs(n.Series[0] - n.Series[1]) % 2 == 1)
-                {
-                    int su = 0;
-                    for (int i = 2; i < n.Series.Length; i++)
-                    {
-                        su += int.Parse(n.Series[i].ToString());
-                    }
-                    if (su % 2 == 1)
-                        return true;
-                }
-            }
-            return true;
-        }
-
         /// <summary>
         /// Проверяет, действительна ли карта
         /// </summary>
@@ -142,11 +106,11 @@ namespace HomeworkATM
         /// <summary>
         /// Сумма денег
         /// </summary>
-        static long CashSum(Stack<Banknote> dict)
+        static long CashSum(Dictionary<string, int> dict)
         {
             long sum = 0;
             foreach (var x in dict)
-                sum += int.Parse(x.Nominal);
+                sum += int.Parse(x.Key) * x.Value;
             return sum;
         }
         /// <summary>
@@ -166,15 +130,15 @@ namespace HomeworkATM
         /// <summary>
         /// Заносит банкноты в касету
         /// </summary>
-        static void AddBanknotesToATM(Stack<Banknote> dict, Stack<Banknote> casette)
+        static void AddBanknotesToATM(Dictionary<string, int> dict, Dictionary<string, int> casette)
         {
             foreach (var x in dict)
-                casette.Push(x);
+                casette[x.Key] += x.Value;
         }
         /// <summary>
         /// Пополнение карты
         /// </summary>
-        static void Replenishment(Card card, ATM atm, Stack<Banknote> banknotes)
+        static void Replenishment(Card card, ATM atm, Dictionary<string, int> banknotes)
         {
             if (ChekBanknotes(banknotes, atm.Cassette, card.Num, atm.History))
             {
@@ -201,18 +165,14 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет, можно ли снять сумму
         /// </summary>
-        static bool CanGetMoney(int sum, Stack<Banknote> dict, string num, List<string> history)
+        static bool CanGetMoney(int sum, Dictionary<string, int> dict, string num, List<string> history)
         {
             var count = 0;
-            var ar = new List<int>();
             foreach (var x in dict)
-                ar.Add(int.Parse(x.Nominal));
-            ar.Order().Reverse();
-            foreach (var x in ar)
             {
-                for (var i = 0; i < ar.Count(); i++)
-                    if (count + x <= sum)
-                        count += x;
+                for (var i = 0; i < x.Value; i++)
+                    if (count + int.Parse(x.Key) <= sum)
+                        count += int.Parse(x.Key);
             }
             if (sum == count)
                 return true;
@@ -223,18 +183,17 @@ namespace HomeworkATM
         /// <summary>
         /// Выдаёт деньги, убирая их из банкомата
         /// </summary>
-        static void GiveMoney(int sum, Stack<Banknote> dict)
+        static void GiveMoney(int sum, Dictionary<string, int> dict)
         {
             var count = 0;
-            dict.OrderBy(x => x.Nominal).Reverse();
             foreach (var x in dict)
             {
-                if (count + int.Parse(x.Nominal) <= sum)
-                {
-                    
-                    count += int.Parse(x.Nominal);
-                    dict.TryPop(x);
-                }
+                for (var i = 0; i < x.Value; i++)
+                    if (count + int.Parse(x.Key) <= sum)
+                    {
+                        dict[x.Key] -= 1;
+                        count += int.Parse(x.Key);
+                    }
             }
         }
         /// <summary>

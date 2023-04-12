@@ -10,7 +10,7 @@ namespace HomeworkATM
     {
         public long ID;
         private string bank;
-        public Dictionary<string, Stack<Banknote>> Cassette;
+        public Dictionary<string, int> Cassette;
         public List<string> History;
         public string Key;
         public string Bank
@@ -26,16 +26,13 @@ namespace HomeworkATM
             }
 
         }
-        /// <summary>
-        /// Количество денег в банкомате
-        /// </summary>
         public long CashAmount
         {
             get
             {
                 long sum = 0;
                 foreach (var x in Cassette)
-                    sum += int.Parse(x.Key) * x.Value.Count;
+                    sum += int.Parse(x.Key) * x.Value;
                 return sum;
             }
         }
@@ -44,7 +41,16 @@ namespace HomeworkATM
             var r = new Random();
             ID = r.NextInt64(10000000, 100000000);
             this.Bank = Bank;
-            Cassette = new Dictionary<string, Stack<Banknote>>();
+            Cassette = new Dictionary<string, int>()
+            {
+                ["5000"] = 100,
+                ["2000"] = 100,
+                ["1000"] = 100,
+                ["500"] = 100,
+                ["200"] = 100,
+                ["100"] = 100,
+                ["50"] = 100
+            };
             History = new List<string>();
             Key = "SlivkaLenivkaSkinulaParshak";
         }

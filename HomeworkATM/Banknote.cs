@@ -38,11 +38,6 @@ namespace HomeworkATM
                     throw new ArgumentException("Неправильный формат серии купюры");
             }
         }
-        public Banknote(string Nominal, string Series)
-        {
-            this.Nominal = Nominal;
-            this.Series = Series;
-        }
         public override string ToString() => $"{Nominal} {Series}";
     }
 }
