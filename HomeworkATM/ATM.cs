@@ -12,7 +12,7 @@ namespace HomeworkATM
         private string bank;
         public Dictionary<string, Stack<Banknote>> Cassette;
         public List<string> History;
-        public string Key;
+        public long Key;
         public string Bank
         {
             get
@@ -46,7 +46,8 @@ namespace HomeworkATM
             this.Bank = Bank;
             Cassette = new Dictionary<string, Stack<Banknote>>();
             History = new List<string>();
-            Key = "SlivkaLenivkaSkinulaParshak";
+            Key = 74306199653196;
+            //Key = r.NextInt64(10000000000000, 100000000000000);
         }
         public override string ToString()
         {

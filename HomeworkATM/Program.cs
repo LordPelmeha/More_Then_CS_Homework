@@ -12,40 +12,40 @@ namespace HomeworkATM
         }
         static void Start()
         {
-            var a = new Card("1234567890111111", "Александр", "11/27", "sdg", 100);
-            var b = new ATM("sdgh");
+            var card = new Card("1234567890111111", "Александр", "11/27", "sdg", 100);
+            var atm = new ATM("sdgh");
             while (true)
             {
                 var s = Console.ReadLine();
-                Console.WriteLine(a.ToString());
+                Console.WriteLine(card.ToString());
                 Console.WriteLine();
-                Console.WriteLine(b.ToString());
+                Console.WriteLine(atm.ToString());
                 Console.WriteLine();
                 if (s == "1")
                 {
-                    //Replenishment(a, b, ReadBanknotes(Console.ReadLine()));
+                    //Replenishment(card, atm, ReadBanknotes(Console.ReadLine()));
                     //Console.WriteLine();
-                    //Console.WriteLine(a.ToString());
+                    //Console.WriteLine(card.ToString());
                     //Console.WriteLine();
-                    //Console.WriteLine(b.ToString());
+                    //Console.WriteLine(atm.ToString());
                     Console.WriteLine();
                 }
                 else if (s == "2")
                 {
-                    Withdrawal(a, b, ChekSum(Console.ReadLine()));
+                    //Withdrawal(card, atm, ChekSum(Console.ReadLine()));
                     //Console.WriteLine();
-                    //Console.WriteLine(a.ToString());
+                    //Console.WriteLine(card.ToString());
                     //Console.WriteLine();
-                    //Console.WriteLine(b.ToString());
+                    //Console.WriteLine(atm.ToString());
                     Console.WriteLine();
                 }
                 else if (s == "0")
                 {
-                    PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
+                    //PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
                     //Console.WriteLine(a.ToString());
                     //Console.WriteLine();
-                    // Console.WriteLine(b.ToString());
-                    Console.WriteLine();
+                    // Console.WriteLine(b.ToString());                  
+                    Console.WriteLine(ChekKey(atm, "1428394874562349"));
                     break;
                 }
                 else
@@ -318,53 +318,88 @@ namespace HomeworkATM
                         }
                         if (s.ToString().Skip(2).ToArray().Select(x => int.Parse(x.ToString())).Sum() % 2 != 1)
                         {
-
+                            if (s[^1] != Convert.ToChar("9"))
+                                s[^1] = Convert.ToChar(s[^1] + 1);
+                            else
+                                s[^1] = Convert.ToChar("8");
                         }
-
                     }
                     else
                     {
-
+                        if ((s[0] - s[1]) % 2 == 1)
+                        {
+                            if (s[1] != 97)
+                                s[1] = Convert.ToChar(s[1] - 1);
+                            else
+                                s[1] = Convert.ToChar(s[1] + 1);
+                        }
+                        if (s.ToString().Skip(2).ToArray().Select(x => int.Parse(x.ToString())).Sum() % 2 == 1)
+                        {
+                            if (s[^1] != Convert.ToChar("9"))
+                                s[^1] = Convert.ToChar(s[^1] + 1);
+                            else
+                                s[^1] = Convert.ToChar("8");
+                        }
                     }
+                    banknote = new Banknote(nominal, s.ToString());
+                    st.Push(banknote);
+                    s = new StringBuilder();
                 }
-                s = new StringBuilder();
             }
             return st;
         }
-
+        static bool ChekKey(ATM atm, string key)
+        {
+            var s = key.ToArray().Select(x => int.Parse(x.ToString())).ToArray();
+            var ans = new StringBuilder();
+            var queue = new Queue<int>();
+            foreach (int x in s)
+            {
+                if (queue.Count < 3)
+                    queue.Enqueue(x);
+                if (queue.Count == 3)
+                {
+                    ans.Append(queue.Sum() % 10);
+                    queue.Dequeue();
+                }
+            }
+            if (ans.ToString() == atm.Key.ToString())
+                return true;
+            return false;
+        }
         /// <summary>
         /// Вызов инкасации
         /// </summary>
         static void PickUp(Card card, ATM atm, string code)
         {
-            if (code.Length == atm.Key.Length)
-            {
-                //int flag = 1;
-                //for (int i = 0; i < code.Length; i++)
-                //{
-                //    if (code[i] - 4 != atm.Key[i])
-                //        flag = 0;
-                //}
-                //if (flag == 1)
-                //{
-                //    var count = 0;
-                //    foreach (var x in atm.Cassette)
-                //        count += x.Value;
-                //    count /= 7;
-                //    foreach (var x in atm.Cassette)
-                //        atm.Cassette[x.Key] = count;
-                //    foreach (var x in atm.History)
-                //        Console.Write(x);
-                //    atm.History.Clear();
-                //}
-                //else
-                //{
-                //    for (int i = 0; i < code.Length; i++)
-                //    {
-                //        Console.WriteLine($"{code[i] - 4} {atm.Key[i] - 0}");
-                //    }
-                //}
-            }
+            //if (code.Length == atm.Key.Length)
+            //{
+            //    int flag = 1;
+            //    for (int i = 0; i < code.Length; i++)
+            //    {
+            //        if (code[i] - 4 != atm.Key[i])
+            //            flag = 0;
+            //    }
+            //    if (flag == 1)
+            //    {
+            //        var count = 0;
+            //        foreach (var x in atm.Cassette)
+            //            count += x.Value;
+            //        count /= 7;
+            //        foreach (var x in atm.Cassette)
+            //            atm.Cassette[x.Key] = count;
+            //        foreach (var x in atm.History)
+            //            Console.Write(x);
+            //        atm.History.Clear();
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < code.Length; i++)
+            //        {
+            //            Console.WriteLine($"{code[i] - 4} {atm.Key[i] - 0}");
+            //        }
+            //    }
+            //}
         }
     }
 }
