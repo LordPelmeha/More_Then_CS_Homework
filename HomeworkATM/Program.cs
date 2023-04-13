@@ -23,16 +23,26 @@ namespace HomeworkATM
                 Console.WriteLine();
                 if (s == "1")
                 {
-                    //Replenishment(card, atm, ReadBanknotes(Console.ReadLine()));
-                    //Console.WriteLine();
-                    //Console.WriteLine(card.ToString());
-                    //Console.WriteLine();
-                    //Console.WriteLine(atm.ToString());
+                    Replenishment(card, atm, new Dictionary<string, Stack<Banknote>>
+                    {
+                        ["50"] = GenGoodBanknotes("50", 1),
+                        ["100"] = GenGoodBanknotes("100", 1),
+                        ["200"] = GenGoodBanknotes("200", 1),
+                        ["500"] = GenGoodBanknotes("500", 1),
+                        ["1000"] = GenGoodBanknotes("1000", 1),
+                        ["2000"] = GenGoodBanknotes("2000", 1),
+                        ["5000"] = GenGoodBanknotes("100", 1),
+
+                    });
+                    Console.WriteLine();
+                    Console.WriteLine(card.ToString());
+                    Console.WriteLine();
+                    Console.WriteLine(atm.ToString());
                     Console.WriteLine();
                 }
                 else if (s == "2")
                 {
-                    //Withdrawal(card, atm, ChekSum(Console.ReadLine()));
+                    Withdrawal(card, atm, CheckSum(Console.ReadLine()));
                     //Console.WriteLine();
                     //Console.WriteLine(card.ToString());
                     //Console.WriteLine();
@@ -45,7 +55,7 @@ namespace HomeworkATM
                     //Console.WriteLine(a.ToString());
                     //Console.WriteLine();
                     // Console.WriteLine(b.ToString());                  
-                    Console.WriteLine(ChekKey(atm, "1428394874562349"));
+                    Console.WriteLine(CheсkKey(atm, "1428394874562349"));
                     break;
                 }
                 else
@@ -58,13 +68,13 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет правильность внесённых банкнот
         /// </summary>
-        static bool ChekBanknotes(Dictionary<string, Stack<Banknote>> dict, Dictionary<string, Stack<Banknote>> caset, string num, List<string> history)
+        static bool CheckBanknotes(Dictionary<string, Stack<Banknote>> dict, Dictionary<string, Stack<Banknote>> caset, string num, List<string> history)
         {
             foreach (var x in dict)
             {
                 foreach (var y in x.Value)
                 {
-                    if (!caset.ContainsKey(x.Key) || int.Parse(y.Nominal) < 1 || !(ChekMoreThousand(y) && ChekLessThousand(y)))
+                    if (!caset.ContainsKey(x.Key) || int.Parse(y.Nominal) < 1 || !(CheckMoreThousand(y) && CheckLessThousand(y)))
                     {
                         history.Add($"{num}: пополнение (некорректная сумма) => вызвана полиция\n");
                         Console.WriteLine($"Вы пытаетьсь совершить незаконную операцию! Полиция уже едет за вами!");
@@ -78,7 +88,7 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет, действительна ли карта
         /// </summary>
-        static bool ChekValid(string valid, string num, List<string> history)
+        static bool CheckValid(string valid, string num, List<string> history)
         {
             var month = int.Parse(valid.Split("/")[0]);
             var year = int.Parse(valid.Split("/")[1]) + 2000;
@@ -146,7 +156,7 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет корректность серии банкоты номиналом меньше 1000
         /// </summary>
-        static bool ChekLessThousand(Banknote n)
+        static bool CheckLessThousand(Banknote n)
         {
             if (int.Parse(n.Nominal) < 1000)
             {
@@ -167,7 +177,7 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет корректность серии банкоты номиналом больше или равным 1000
         /// </summary>
-        static bool ChekMoreThousand(Banknote n)
+        static bool CheckMoreThousand(Banknote n)
         {
             if (int.Parse(n.Nominal) >= 1000)
             {
@@ -190,9 +200,9 @@ namespace HomeworkATM
         /// </summary>
         static void Replenishment(Card card, ATM atm, Dictionary<string, Stack<Banknote>> banknotes)
         {
-            if (ChekBanknotes(banknotes, atm.Cassette, card.Num, atm.History))
+            if (CheckBanknotes(banknotes, atm.Cassette, card.Num, atm.History))
             {
-                if (ChekValid(card.Valid, card.Num, atm.History))
+                if (CheckValid(card.Valid, card.Num, atm.History))
                 {
                     double AddMoney = CashSum(banknotes) * AddCommission(card.Bank, atm.Bank, card.Num, atm.History);
                     card.Sum += AddMoney;
@@ -205,7 +215,7 @@ namespace HomeworkATM
         /// <summary>
         /// Проверяет сумму, которую хотят снять
         /// </summary>
-        static int ChekSum(string s)
+        static int CheckSum(string s)
         {
             if (!Regex.Match(s, @"\D").Success || s != "")
                 if (int.Parse(s) % 50 == 0)
@@ -251,7 +261,7 @@ namespace HomeworkATM
         /// </summary>
         static void Withdrawal(Card card, ATM atm, int sum)
         {
-            if (ChekValid(card.Valid, card.Num, atm.History))
+            if (CheckValid(card.Valid, card.Num, atm.History))
             {
                 if (atm.CashAmount >= sum)
                 {
@@ -275,6 +285,12 @@ namespace HomeworkATM
                 }
             }
         }
+        /// <summary>
+        /// Генерирует стэк купюр(без проверки на корректность серии)
+        /// </summary>
+        /// <param name="nominal"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         static Stack<Banknote> GenBanknotes(string nominal, int n)
         {
             var st = new Stack<Banknote>();
@@ -291,6 +307,12 @@ namespace HomeworkATM
             }
             return st;
         }
+        /// <summary>
+        /// Генерирует стэк купюр с корректной серией
+        /// </summary>
+        /// <param name="nominal"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         static Stack<Banknote> GenGoodBanknotes(string nominal, int n)
         {
             var st = new Stack<Banknote>();
@@ -303,11 +325,11 @@ namespace HomeworkATM
                 for (int j = 0; j < 9; j++)
                     s.Append(r.Next(0, 10).ToString());
                 var banknote = new Banknote(nominal, s.ToString());
-                if (ChekMoreThousand(banknote) && ChekLessThousand(banknote))
+                if (CheckMoreThousand(banknote) && CheckLessThousand(banknote))
                     st.Push(banknote);
                 else
                 {
-                    if (!ChekMoreThousand(banknote))
+                    if (!CheckMoreThousand(banknote))
                     {
                         if ((s[0] - s[1]) % 2 != 1)
                         {
@@ -341,14 +363,18 @@ namespace HomeworkATM
                                 s[^1] = Convert.ToChar("8");
                         }
                     }
-                    banknote = new Banknote(nominal, s.ToString());
-                    st.Push(banknote);
-                    s = new StringBuilder();
                 }
+                //Console.WriteLine(s.ToString());
+                banknote = new Banknote(nominal, s.ToString());
+                st.Push(banknote);
+                s = new StringBuilder();
             }
             return st;
         }
-        static bool ChekKey(ATM atm, string key)
+        /// <summary>
+        /// Расшифровывает ключ инкасации и сравнивает его с ключом банкомата
+        /// </summary>
+        static bool CheсkKey(ATM atm, string key)
         {
             var s = key.ToArray().Select(x => int.Parse(x.ToString())).ToArray();
             var ans = new StringBuilder();
@@ -368,10 +394,57 @@ namespace HomeworkATM
             return false;
         }
         /// <summary>
+        /// Проверяет купюры банкомата на отсутсвие среди них купюр с одинаковой серией
+        /// </summary>
+        static bool CheсkSeries(Dictionary<string, Stack<Banknote>> cassette)
+        {
+            var hs = new HashSet<string>();
+            foreach (var x in cassette)
+            {
+                foreach (var y in x.Value)
+                {
+                    if (hs.Contains(y.Series))
+                    {
+                        Console.WriteLine("В банкомате была фальшывая купюра!");
+                        return false;
+                    }
+                    hs.Add(y.Series);
+                }
+            }
+            return true;
+        }
+        /// <summary>
         /// Вызов инкасации
         /// </summary>
-        static void PickUp(Card card, ATM atm, string code)
+        static void PickUp(Card card, ATM atm, string key)
         {
+            if (CheсkKey(atm, key))
+            {
+                if (CheсkSeries(atm.Cassette))
+                {
+                    int average = 0;
+                    int count = 0;
+                    foreach (var x in atm.Cassette)
+                    {
+                        average += x.Value.Count();
+                        count += 1;
+                    }
+                    average /= count;
+                    foreach (var x in atm.Cassette)
+                    {
+                        if (x.Value.Count() > average)
+                        {
+                            for (int i = 0; i < x.Value.Count - average; i++)
+                                x.Value.Pop();
+                        }
+                        if (x.Value.Count() < average)
+                        {
+                            foreach (var y in GenGoodBanknotes(x.Key, average - x.Value.Count()))
+                                x.Value.Push(y);
+                        }
+                    }
+                }
+            }
             //if (code.Length == atm.Key.Length)
             //{
             //    int flag = 1;
