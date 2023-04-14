@@ -32,7 +32,7 @@ namespace HomeworkATM
             }
             private set
             {
-                if (Regex.Match(value, @"[a-z]{2}]\d{9}").Success)
+                if (Regex.Match(value, @"[a-z]{2}\d{9}").Success)
                     series = value;
                 else
                     throw new ArgumentException("Неправильный формат серии купюры");

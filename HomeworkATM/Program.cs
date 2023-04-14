@@ -16,52 +16,51 @@ namespace HomeworkATM
             var atm = new ATM("sdgh");
             while (true)
             {
-                var s = Console.ReadLine();
-                Console.WriteLine(card.ToString());
+                var ss = Console.ReadLine();
+                Console.WriteLine(card);
                 Console.WriteLine();
-                Console.WriteLine(atm.ToString());
+                Console.WriteLine(atm);
                 Console.WriteLine();
-                if (s == "1")
+                if (ss == "1")
                 {
                     Replenishment(card, atm, new Dictionary<string, Stack<Banknote>>
                     {
-                        ["50"] = GenGoodBanknotes("50", 1),
-                        ["100"] = GenGoodBanknotes("100", 1),
-                        ["200"] = GenGoodBanknotes("200", 1),
-                        ["500"] = GenGoodBanknotes("500", 1),
-                        ["1000"] = GenGoodBanknotes("1000", 1),
-                        ["2000"] = GenGoodBanknotes("2000", 1),
-                        ["5000"] = GenGoodBanknotes("100", 1),
-
+                        ["5000"] = GenGoodBanknotes("5000", 0),
+                        ["2000"] = GenGoodBanknotes("2000", 0),
+                        ["1000"] = GenGoodBanknotes("1000", 0),
+                        ["500"] = GenGoodBanknotes("500", 100),
+                        ["200"] = GenGoodBanknotes("200", 100),
+                        ["100"] = GenGoodBanknotes("100", 100),
+                        ["50"] = GenGoodBanknotes("50", 100)
                     });
                     Console.WriteLine();
-                    Console.WriteLine(card.ToString());
+                    Console.WriteLine(card);
                     Console.WriteLine();
-                    Console.WriteLine(atm.ToString());
+                    Console.WriteLine(atm);
                     Console.WriteLine();
                 }
-                else if (s == "2")
+                else if (ss == "2")
                 {
                     Withdrawal(card, atm, CheckSum(Console.ReadLine()));
-                    //Console.WriteLine();
-                    //Console.WriteLine(card.ToString());
-                    //Console.WriteLine();
-                    //Console.WriteLine(atm.ToString());
+                    Console.WriteLine();
+                    Console.WriteLine(card);
+                    Console.WriteLine();
+                    Console.WriteLine(atm);
                     Console.WriteLine();
                 }
-                else if (s == "0")
+                else if (ss == "0")
                 {
-                    //PickUp(a, b, "WpmzoePirmzoeWomrypeTevwleo");
-                    //Console.WriteLine(a.ToString());
-                    //Console.WriteLine();
-                    // Console.WriteLine(b.ToString());                  
-                    Console.WriteLine(CheсkKey(atm, "1428394874562349"));
+
+                    PickUp(card, atm, "1428394874562349");
+                    Console.WriteLine(card);
+                    Console.WriteLine();
+                    Console.WriteLine(atm);
                     break;
                 }
                 else
                 {
-                    while (s != "1" || s != "2" || s != "0")
-                        s = Console.ReadLine();
+                    while (ss != "1" || ss != "2" || ss != "0")
+                        ss = Console.ReadLine();
                 }
             }
         }
@@ -76,6 +75,7 @@ namespace HomeworkATM
                 {
                     if (!caset.ContainsKey(x.Key) || int.Parse(y.Nominal) < 1 || !(CheckMoreThousand(y) && CheckLessThousand(y)))
                     {
+                        Console.WriteLine($"{!caset.ContainsKey(x.Key)} {int.Parse(y.Nominal) < 1} {CheckMoreThousand(y)} {CheckLessThousand(y)}");
                         history.Add($"{num}: пополнение (некорректная сумма) => вызвана полиция\n");
                         Console.WriteLine($"Вы пытаетьсь совершить незаконную операцию! Полиция уже едет за вами!");
                         return false;
@@ -310,9 +310,6 @@ namespace HomeworkATM
         /// <summary>
         /// Генерирует стэк купюр с корректной серией
         /// </summary>
-        /// <param name="nominal"></param>
-        /// <param name="n"></param>
-        /// <returns></returns>
         static Stack<Banknote> GenGoodBanknotes(string nominal, int n)
         {
             var st = new Stack<Banknote>();
@@ -346,16 +343,17 @@ namespace HomeworkATM
                                 s[^1] = Convert.ToChar("8");
                         }
                     }
-                    else
+                    else if (!CheckLessThousand(banknote))
                     {
-                        if ((s[0] - s[1]) % 2 == 1)
+
+                        if ((s[0] - s[1]) % 2 != 0)
                         {
                             if (s[1] != 97)
                                 s[1] = Convert.ToChar(s[1] - 1);
                             else
                                 s[1] = Convert.ToChar(s[1] + 1);
                         }
-                        if (s.ToString().Skip(2).ToArray().Select(x => int.Parse(x.ToString())).Sum() % 2 == 1)
+                        if (s.ToString().Skip(2).ToArray().Select(x => int.Parse(x.ToString())).Sum() % 2 != 0)
                         {
                             if (s[^1] != Convert.ToChar("9"))
                                 s[^1] = Convert.ToChar(s[^1] + 1);
@@ -363,10 +361,9 @@ namespace HomeworkATM
                                 s[^1] = Convert.ToChar("8");
                         }
                     }
+                    banknote = new Banknote(nominal, s.ToString());
+                    st.Push(banknote);
                 }
-                //Console.WriteLine(s.ToString());
-                banknote = new Banknote(nominal, s.ToString());
-                st.Push(banknote);
                 s = new StringBuilder();
             }
             return st;
@@ -442,9 +439,15 @@ namespace HomeworkATM
                             foreach (var y in GenGoodBanknotes(x.Key, average - x.Value.Count()))
                                 x.Value.Push(y);
                         }
+
                     }
+                    Console.WriteLine("Инксация завершила работу!");
+                    atm.History.Clear();
+                    return;
                 }
+
             }
+            Console.WriteLine("Инкасация не смогла завершить работу!");
             //if (code.Length == atm.Key.Length)
             //{
             //    int flag = 1;
