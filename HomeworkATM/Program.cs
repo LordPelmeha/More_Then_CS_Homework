@@ -426,7 +426,7 @@ namespace HomeworkATM
                         average += x.Value.Count();
                         count += 1;
                     }
-                    average /= count;
+                    Console.WriteLine(average);
                     foreach (var x in atm.Cassette)
                     {
                         if (x.Value.Count() > average)
@@ -445,37 +445,12 @@ namespace HomeworkATM
                     atm.History.Clear();
                     return;
                 }
-
             }
             Console.WriteLine("Инкасация не смогла завершить работу!");
-            //if (code.Length == atm.Key.Length)
-            //{
-            //    int flag = 1;
-            //    for (int i = 0; i < code.Length; i++)
-            //    {
-            //        if (code[i] - 4 != atm.Key[i])
-            //            flag = 0;
-            //    }
-            //    if (flag == 1)
-            //    {
-            //        var count = 0;
-            //        foreach (var x in atm.Cassette)
-            //            count += x.Value;
-            //        count /= 7;
-            //        foreach (var x in atm.Cassette)
-            //            atm.Cassette[x.Key] = count;
-            //        foreach (var x in atm.History)
-            //            Console.Write(x);
-            //        atm.History.Clear();
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < code.Length; i++)
-            //        {
-            //            Console.WriteLine($"{code[i] - 4} {atm.Key[i] - 0}");
-            //        }
-            //    }
-            //}
         }
     }
+    //Я недоволен своим прошлым кодом, ведь писал его, как и подобает прилежному студенту, в последний момент. В этот раз ничего не поменялось.
+    //Из-за недопонимания задачи я потратил пару часов впустую. Но меня не огорчило, ведь у меня был коммит, то которого я смог откатиться. А что-то касатеся
+    //выполнения этого домашеного задания, то оно стало причиной серьёзных моральных, умственных и физических страданий. Надеюсь, я сделаю выводы  и не перестану делать всё
+    //в последний момент.
 }
