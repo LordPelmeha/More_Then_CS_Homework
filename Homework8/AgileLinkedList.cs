@@ -88,9 +88,15 @@ namespace Homework8
         }
         public void Remove(int n)
         {
+            if (n < 1)
+                throw new ArgumentException("Вы вышли за пределы списка!");
             var p = First;
             for (int i = 0; i < n - 1; i++)
+            {
+                if (p == null)
+                    throw new ArgumentException("Вы вышли за пределы списка!");
                 p = p.Next;
+            }
             if (p == First)
                 RemoveFirst();
             else if (p == Last)
@@ -101,11 +107,18 @@ namespace Homework8
                 p.Previous.Next = p.Next;
             }
         }
-        public void AddAfter(int n, T x)
+        public void AddAfterNPosition(int n, T x)
         {
+            if (n < 1)
+                throw new ArgumentException("Вы вышли за пределы списка!");
             var p = First;
             for (int i = 0; i < n - 1; i++)
+            {
+                if (p == null)
+                    throw new ArgumentException("Вы вышли за пределы списка!");
                 p = p.Next;
+            }
+
             if (p == Last)
                 AddLast(x);
             else
@@ -113,6 +126,14 @@ namespace Homework8
                 var p1 = new Node<T>(x, p, p.Next);
                 p.Next = p1;
                 p1.Next.Previous = p1;
+            }
+        }
+        public void ShiftLeft(int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                AddLast(First.Data);
+                RemoveFirst();
             }
         }
     }
