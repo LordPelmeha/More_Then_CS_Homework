@@ -25,6 +25,11 @@ namespace Homework8
                 this.Next = Next;
             }
         }
+        public AgileLinkedList(params T[] s)
+        {
+            foreach (var x in s)
+                AddLast(x);
+        }
         public override string ToString()
         {
             var s = new StringBuilder();
@@ -36,6 +41,38 @@ namespace Homework8
             }
             return s.ToString();
         }
+        public void AddFirst(T x)
+        {
+            var p = new Node<T>(x, null, First);
+            if (First != null)
+                First.Previous = p;
+            First = p;
+            if (Last == null)
+                Last = p;
+        }
+        public void AddLast(T x)
+        {
+            var p = new Node<T>(x, Last, null);
+            if (Last != null)
+                Last.Next = p;
+            Last = p;
+            if (First == null)
+                First = p;
+        }
+        public bool IsSimmetrical()
+        {
+            var f = First;
+            var l = Last;
+            while (l != null)
+            {
+                if (f != l)
+                    return false;
+                f = f.Next;
+                l = l.Previous;
+            }
+            return true;
+        }
+
 
     }
 }
