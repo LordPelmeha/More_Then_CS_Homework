@@ -65,14 +65,55 @@ namespace Homework8
             var l = Last;
             while (l != null)
             {
-                if (f != l)
+                if (f.Data.ToString() != l.Data.ToString())
                     return false;
                 f = f.Next;
                 l = l.Previous;
             }
             return true;
         }
-
-
+        public void RemoveFirst()
+        {
+            First = First.Next;
+            if (First == null)
+                Last = null;
+            else First.Previous = null;
+        }
+        public void RemoveLast()
+        {
+            Last = Last.Previous;
+            if (Last == null)
+                First = null;
+            else Last.Next = null;
+        }
+        public void Remove(int n)
+        {
+            var p = First;
+            for (int i = 0; i < n - 1; i++)
+                p = p.Next;
+            if (p == First)
+                RemoveFirst();
+            else if (p == Last)
+                RemoveLast();
+            else
+            {
+                p.Next.Previous = p.Previous;
+                p.Previous.Next = p.Next;
+            }
+        }
+        public void AddAfter(int n, T x)
+        {
+            var p = First;
+            for (int i = 0; i < n - 1; i++)
+                p = p.Next;
+            if (p == Last)
+                AddLast(x);
+            else
+            {
+                var p1 = new Node<T>(x, p, p.Next);
+                p.Next = p1;
+                p1.Next.Previous = p1;
+            }
+        }
     }
 }
