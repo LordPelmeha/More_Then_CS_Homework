@@ -16,6 +16,7 @@
             Console.WriteLine(b);
             b.ReverseList();
             Console.WriteLine(b);
+            b.PrintRandomElem();
         }
     }
 }

@@ -184,5 +184,30 @@ namespace Homework8
                 RemoveLast();
             }
         }
+        /// <summary>
+        /// Печаатет случайный элемент списка
+        /// </summary>
+        public void PrintRandomElem()
+        {
+            var r = new Random();
+            int count = 0;
+            var f = First;
+            while (f != null)
+            {
+                ++count;
+                f = f.Next;
+            }
+            if (count == 0)
+                return;
+            if (count == 1)
+            {
+                Console.WriteLine(First.Data);
+                return;
+            }
+            f = First;
+            for (int i = 0; i < r.Next(0, count); i++)
+                f = f.Next;
+            Console.WriteLine(f.Data);
+        }
     }
 }
