@@ -30,6 +30,9 @@ namespace Homework8
             foreach (var x in s)
                 AddLast(x);
         }
+        /// <summary>
+        /// Переопределённый метод ToString()
+        /// </summary>
         public override string ToString()
         {
             var s = new StringBuilder();
@@ -41,6 +44,9 @@ namespace Homework8
             }
             return s.ToString();
         }
+        /// <summary>
+        /// Добавляет элемент в начало списка
+        /// </summary>
         public void AddFirst(T x)
         {
             var p = new Node<T>(x, null, First);
@@ -50,6 +56,9 @@ namespace Homework8
             if (Last == null)
                 Last = p;
         }
+        /// <summary>
+        /// Добавляет элемент в конец списка
+        /// </summary>
         public void AddLast(T x)
         {
             var p = new Node<T>(x, Last, null);
@@ -59,6 +68,9 @@ namespace Homework8
             if (First == null)
                 First = p;
         }
+        /// <summary>
+        /// Проверяет список на симметричность
+        /// </summary>
         public bool IsSimmetrical()
         {
             var f = First;
@@ -72,6 +84,9 @@ namespace Homework8
             }
             return true;
         }
+        /// <summary>
+        /// Удаляет первый элемент списка
+        /// </summary>
         public void RemoveFirst()
         {
             First = First.Next;
@@ -79,6 +94,9 @@ namespace Homework8
                 Last = null;
             else First.Previous = null;
         }
+        /// <summary>
+        /// Удаляет последний элемент списка
+        /// </summary>
         public void RemoveLast()
         {
             Last = Last.Previous;
@@ -86,6 +104,9 @@ namespace Homework8
                 First = null;
             else Last.Next = null;
         }
+        /// <summary>
+        /// Удаляет n-ый элемент списка
+        /// </summary>
         public void Remove(int n)
         {
             if (n < 1)
@@ -107,6 +128,9 @@ namespace Homework8
                 p.Previous.Next = p.Next;
             }
         }
+        /// <summary>
+        /// Встаялет элемент после n-того
+        /// </summary>
         public void AddAfterNPosition(int n, T x)
         {
             if (n < 1)
@@ -128,12 +152,36 @@ namespace Homework8
                 p1.Next.Previous = p1;
             }
         }
+        /// <summary>
+        /// Циклически сдвигает массив влево
+        /// </summary>
         public void ShiftLeft(int n)
         {
             for (int i = 0; i < n; i++)
             {
                 AddLast(First.Data);
                 RemoveFirst();
+            }
+        }
+        /// <summary>
+        /// Переворачивает список
+        /// </summary>
+        public void ReverseList()
+        {
+            int count = 0;
+            var f = First;
+            var l = Last;
+            while (f != null)
+            {
+                ++count;
+                f = f.Next;
+            }
+            AddFirst(Last.Data);
+            RemoveLast();
+            for (int i = 1; i < count; i++)
+            {
+                AddAfterNPosition(i, Last.Data);
+                RemoveLast();
             }
         }
     }

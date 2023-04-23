@@ -14,6 +14,8 @@
             Console.WriteLine(b);
             b.ShiftLeft(1);
             Console.WriteLine(b);
+            b.ReverseList();
+            Console.WriteLine(b);
         }
     }
 }
