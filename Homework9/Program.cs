@@ -14,6 +14,7 @@ namespace Homework9
             TreeUtils.PrintTreePostfix(b);
             TreeUtils.PrintTreePostfix(a);
             Console.WriteLine(TreeUtils.LeafSum(a));
+            Console.WriteLine(TreeUtils.LevelWidth(a, 1));
         }
     }
 }

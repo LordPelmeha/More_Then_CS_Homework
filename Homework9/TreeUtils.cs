@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Laba18
 {
@@ -192,6 +190,24 @@ namespace Laba18
                 sum(r.Left, ref s);
             }
             return s;
+        }
+        public static int LevelWidth(TreeNode<int> root, int level)
+        {
+            if (level < 0)
+                throw new ArgumentException("Уровень не может быть отрицательным!");
+            int count = 0;
+            CountNodeOnLevel(root, level, ref count);
+            void CountNodeOnLevel(TreeNode<int> r, int lvl, ref int count)
+            {
+                if (lvl == 0 && r != null)
+                    ++count;
+                --lvl;
+                if (lvl < 0 || r == null)
+                    return;
+                CountNodeOnLevel(r.Left, lvl, ref count);
+                CountNodeOnLevel(r.Right, lvl, ref count);
+            }
+            return count;
         }
     }
 }
