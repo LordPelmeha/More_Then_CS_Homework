@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -176,6 +177,21 @@ namespace Laba18
                     )
                 )
             );
+        }
+        public static int LeafSum(TreeNode<int> root)
+        {
+            int s = 0;
+            sum(root, ref s);
+            void sum(TreeNode<int> r, ref int s)
+            {
+                if (r == null)
+                    return;
+                if (r.Left == null && r.Right == null)
+                    s += r.Data;
+                sum(r.Right, ref s);
+                sum(r.Left, ref s);
+            }
+            return s;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Homework9
             b = TreeUtils.GetSampleIntTree2();
             TreeUtils.PrintTreePostfix(b);
             TreeUtils.PrintTreePostfix(a);
+            Console.WriteLine(TreeUtils.LeafSum(a));
         }
     }
 }
