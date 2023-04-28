@@ -6,7 +6,13 @@ namespace Homework9
     {
         static void Main()
         {
-            TreeUtils.PrintTreePostfix(TreeUtils.GetSampleIntTree2());
+            var b = TreeUtils.GetSampleIntTree1();
+            TreeUtils.PrintTreePostfix(b);
+            var a = b.Copy();
+            TreeUtils.PrintTreePostfix(a);
+            b = TreeUtils.GetSampleIntTree2();
+            TreeUtils.PrintTreePostfix(b);
+            TreeUtils.PrintTreePostfix(a);
         }
     }
 }

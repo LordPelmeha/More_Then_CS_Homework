@@ -14,7 +14,7 @@ namespace Laba18
         /// <summary>
         /// Поле данных
         /// </summary>
-        public T Data;
+        public int Data;
 
         /// <summary>
         /// Левое поддерево
@@ -33,12 +33,13 @@ namespace Laba18
         /// <param name="data">Значение поля данных узла</param>
         /// <param name="left">Левое поддерево</param>
         /// <param name="right">Правое поддерево</param>
-        public TreeNode(T data, TreeNode<T>? left = null, TreeNode<T>? right = null)
+        public TreeNode(int data, TreeNode<T>? left = null, TreeNode<T>? right = null)
         {
             Data = data;
             Left = left;
             Right = right;
         }
+        public TreeNode<T> Copy() => new TreeNode<T>(Data, Left, Right);
     }
 }
 

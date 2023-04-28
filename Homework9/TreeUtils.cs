@@ -30,6 +30,9 @@ namespace Laba18
                 PrintNodeInfix(node.Right);
             }
         }
+        /// <summary>
+        /// Печатает дерево постфиксным обходом. Если дерево пустое, выводится &lt;empty tree&gt;
+        /// </summary>
         public static void PrintTreePostfix<T>(TreeNode<T>? root)
         {
             if (root == null)
