@@ -176,6 +176,9 @@ namespace Laba18
                 )
             );
         }
+        /// <summary>
+        /// Находит сумму значений в листьях
+        /// </summary>
         public static int LeafSum(TreeNode<int> root)
         {
             int s = 0;
@@ -191,6 +194,9 @@ namespace Laba18
             }
             return s;
         }
+        /// <summary>
+        /// Находит ширину уровня с заданным номером (номер не может быть отрицательным). Если дерево не содержит такого уровня, возвращает 0
+        /// </summary>
         public static int LevelWidth(TreeNode<int> root, int level)
         {
             if (level < 0)
@@ -209,6 +215,11 @@ namespace Laba18
             }
             return count;
         }
+        /// <summary>
+        /// Назовём деревом сумм бинарное дерево, для которого выполняется правило: листья могут принимать 
+        /// любые значения, в то время как значением других узлов является сумма значений всех узлов в обоих поддеревьях.
+        /// Функция, принимает на вход бинарное дерево (то есть его корень) и определяет, является ли оно деревом сумм
+        /// </summary>
         public static bool IsTreeSum(TreeNode<int> root)
         {
             void sum(TreeNode<int> root, ref int s)

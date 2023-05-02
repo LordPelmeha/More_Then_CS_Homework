@@ -38,6 +38,9 @@ namespace Laba18
             Left = left;
             Right = right;
         }
+        /// <summary>
+        /// Делает точную копию узла и всех его потомков   
+        /// </summary>
         public TreeNode<T> Copy() => new TreeNode<T>(Data, Left, Right);
     }
 }
