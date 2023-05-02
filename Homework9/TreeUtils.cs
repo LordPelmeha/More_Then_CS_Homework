@@ -209,5 +209,27 @@ namespace Laba18
             }
             return count;
         }
+        public static bool IsTreeSum(TreeNode<int> root)
+        {
+            void sum(TreeNode<int> root, ref int s)
+            {
+                if (root == null)
+                    return;
+                s += root.Data;
+                sum(root.Left, ref s);
+                sum(root.Right, ref s);
+            }
+            bool ChekNode(TreeNode<int> root)
+            {
+                if (root == null)
+                    return true;
+                int su = 0;
+                sum(root, ref su);
+                if (root.Data != su - root.Data && root.Left != null && root.Right != null)
+                    return false;
+                return ChekNode(root.Left) && ChekNode(root.Right);
+            }
+            return ChekNode(root);
+        }
     }
 }

@@ -15,6 +15,16 @@ namespace Homework9
             TreeUtils.PrintTreePostfix(a);
             Console.WriteLine(TreeUtils.LeafSum(a));
             Console.WriteLine(TreeUtils.LevelWidth(a, 1));
+            Console.WriteLine(TreeUtils.IsTreeSum(
+                new TreeNode<int>(26,
+                new TreeNode<int>(10,
+                    new TreeNode<int>(4),
+                    new TreeNode<int>(6)
+                ),
+                new TreeNode<int>(3,
+                    right: new TreeNode<int>(3)
+                )
+            )));
         }
     }
 }
