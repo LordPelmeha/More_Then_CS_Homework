@@ -7,6 +7,7 @@ namespace Homework9
         static void Main()
         {
             TreeUtils.PrintTreePostfix(TreeUtils.GetSampleIntTree2());
+            Console.WriteLine(BinarySearchTree.FindMinAndMax(TreeUtils.GetSampleIntTree1()));
         }
     }
 }

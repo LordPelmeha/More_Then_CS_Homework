@@ -47,5 +47,23 @@ namespace Laba18
             }
             return false;
         }
+        public static (int, int) FindMinAndMax(TreeNode<int> root)
+        {
+            int min = int.MaxValue;
+            int max = int.MinValue;
+            void Find(TreeNode<int> root, ref int min, ref int max)
+            {
+                if (root == null)
+                    return;
+                if (root.Data < min)
+                    min = root.Data;
+                if (root.Data > max)
+                    max = root.Data;
+                Find(root.Left, ref min, ref max);
+                Find(root.Right, ref max, ref min);
+            }
+            Find(root, ref min, ref max);
+            return (min, max);
+        }
     }
 }
