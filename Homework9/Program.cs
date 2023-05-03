@@ -25,6 +25,12 @@ namespace Homework9
                     right: new TreeNode<int>(3)
                 )
             )));
+            TreeUtils.PrintTreePostfix(TreeUtils.GetSampleIntTree2());
+            Console.WriteLine(BinarySearchTree.Min(TreeUtils.GetSampleIntTree1()));
+            Console.WriteLine(BinarySearchTree.Max(TreeUtils.GetSampleIntTree1()));
+            Console.WriteLine(BinarySearchTree.SumNMinTreeNum(TreeUtils.GetSampleIntTree1(), 2));
+            foreach (var x in BinarySearchTree.ToSortedArray(TreeUtils.GetSampleIntTree1()))
+                Console.Write(x + " ");
         }
     }
 }
