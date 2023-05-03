@@ -47,7 +47,11 @@ namespace Laba18
             }
             return false;
         }
-        public static (int, int) FindMinAndMax(TreeNode<int> root)
+        /// <summary>
+        /// Находит минимальный И максимальный элемент в дереве. 
+        /// По ошибке сделал так, что находит и то, и то
+        /// </summary>
+        private static (int, int) FindMinAndMax(TreeNode<int> root)
         {
             int min = int.MaxValue;
             int max = int.MinValue;
@@ -60,10 +64,64 @@ namespace Laba18
                 if (root.Data > max)
                     max = root.Data;
                 Find(root.Left, ref min, ref max);
-                Find(root.Right, ref max, ref min);
+
+                Find(root.Right, ref min, ref max);
             }
             Find(root, ref min, ref max);
             return (min, max);
+        }
+        /// <summary>
+        ///  Находит минимальный в дереве
+        /// </summary>
+        public static int Min(TreeNode<int> root) => FindMinAndMax(root).Item1;
+        /// <summary>
+        ///  Находит максимальный элемент в дереве
+        /// </summary>
+        public static int Max(TreeNode<int> root) => FindMinAndMax(root).Item2;
+        /// <summary>
+        /// Добавляет элемент в дерево
+        /// </summary>
+        private static void AddToTree(TreeNode<int> root, ref TreeNode<int> bst)
+        {
+            if (root == null)
+                return;
+            AddToBST(ref bst, root.Data);
+            AddToTree(root.Left, ref bst);
+            AddToTree(root.Right, ref bst);
+        }
+        /// <summary>
+        /// Добавляет эелементы дерева в список
+        /// </summary>
+        private static void AddToList(TreeNode<int> root, ref List<int> lst)
+        {
+            if (root == null)
+                return;
+            AddToList(root.Left, ref lst);
+            lst.Add(root.Data);
+            AddToList(root.Right, ref lst);
+
+        }
+        /// <summary>
+        /// Находит сумму N минимальных элементов дерева
+        /// </summary>
+        public static int SumNMinTreeNum(TreeNode<int> root, int n)
+        {
+            var bst = new BinarySearchTree();
+            var lst = new List<int>();
+            AddToTree(root, ref bst.root);
+            AddToList(bst.root, ref lst);
+            return lst.Take(n).Sum();
+        }
+        /// <summary>
+        /// Возвращает массив, состоящий из всех значений дерева по возрастсанию
+        /// </summary>
+        public static int[] ToSortedArray(TreeNode<int> root)
+        {
+            var lst = new List<int>();
+            var bst = new BinarySearchTree();
+            AddToTree(root, ref bst.root);
+            AddToList(bst.root, ref lst);
+            return lst.ToArray();
         }
     }
 }
