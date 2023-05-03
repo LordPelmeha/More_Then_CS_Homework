@@ -1,5 +1,8 @@
 using NUnit.Framework.Internal;
 using static Homework2.Program;
+using static Homework9.BinarySearchTree;
+using static Homework9.TreeUtils;
+using Homework9;
 namespace HomeworkTests
 
 {
@@ -56,6 +59,72 @@ namespace HomeworkTests
             Assert.That(MaxAverage(new int[][] {
                 new int[]{ 1, 2, 3 },
                 new int[]{ 1, 2, 3 } }), Is.EqualTo(2));
+        }
+
+
+        [Test]
+        public void TestLeafSum()
+        {
+            Assert.That(0, Is.EqualTo(LeafSum(null)));
+            Assert.That(6, Is.EqualTo(LeafSum(GetSampleIntTree1())));
+            Assert.That(-57, Is.EqualTo(LeafSum(GetSampleIntTree3())));
+        }
+
+        [Test]
+        public void TestLevelWidth()
+        {
+            Assert.That(0, Is.EqualTo(LevelWidth(null, 5)));
+            Assert.That(3, Is.EqualTo(LevelWidth(GetSampleIntTree1(), 2)));
+            Assert.That(1, Is.EqualTo(LevelWidth(GetSampleIntTree3(), 1)));
+        }
+
+        [Test]
+        public void TestIsTreeSum()
+        {
+            Assert.That(false, Is.EqualTo(IsTreeSum(GetSampleIntTree1())));
+            Assert.That(true, Is.EqualTo(IsTreeSum(new TreeNode<int>(5))));
+            Assert.That(true, Is.EqualTo(IsTreeSum(
+                new TreeNode<int>(26,
+                new TreeNode<int>(10,
+                    new TreeNode<int>(4),
+                    new TreeNode<int>(6)
+                ),
+                new TreeNode<int>(3,
+                    right: new TreeNode<int>(3)
+                )
+            ))));
+        }
+
+        [Test]
+        public void TestMin()
+        {
+            Assert.That(int.MaxValue, Is.EqualTo(Min(null)));
+            Assert.That(-6, Is.EqualTo(Min(GetSampleIntTree1())));
+            Assert.That(-1001, Is.EqualTo(Min(GetSampleIntTree3())));
+        }
+
+        [Test]
+        public void TestMax()
+        {
+            Assert.That(int.MinValue, Is.EqualTo(Max(null)));
+            Assert.That(32, Is.EqualTo(Max(GetSampleIntTree1())));
+            Assert.That(999, Is.EqualTo(Max(GetSampleIntTree3())));
+        }
+
+        [Test]
+        public void TestSumNMinTreeNum()
+        {
+            Assert.That(0, Is.EqualTo(SumNMinTreeNum(null, 2)));
+            Assert.That(-11, Is.EqualTo(SumNMinTreeNum(GetSampleIntTree1(), 3)));
+            Assert.That(-1058, Is.EqualTo(SumNMinTreeNum(GetSampleIntTree3(), 2)));
+        }
+
+        [Test]
+        public void TestToSortedArray()
+        {
+            Assert.That(new int[] { }, Is.EqualTo(ToSortedArray(null)));
+            Assert.That(new int[] { -6, -5, 0, 7, 11, 32 }, Is.EqualTo(ToSortedArray(GetSampleIntTree1())));
+            Assert.That(new int[] { -1001, -57, 0, 999 }, Is.EqualTo(ToSortedArray(GetSampleIntTree3())));
         }
     }
 }

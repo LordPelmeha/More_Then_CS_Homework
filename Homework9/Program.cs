@@ -1,6 +1,4 @@
-﻿using Laba18;
-
-namespace Homework9
+﻿namespace Homework9
 {
     internal class Program
     {

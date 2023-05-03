@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Homework2\Homework2.csproj" />
+    <ProjectReference Include="..\Homework9\Homework9.csproj" />
   </ItemGroup>
 
 </Project>
